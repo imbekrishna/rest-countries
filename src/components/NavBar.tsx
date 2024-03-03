@@ -1,4 +1,14 @@
+import { useEffect, useState } from 'react';
+
 const NavBar = () => {
+  const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+  const [isDark, setIsDark] = useState(defaultDark);
+
+  useEffect(() => {
+    document.body.classList.toggle('dark');
+  }, [isDark]);
+
   return (
     <nav className="navbar--wrapper">
       <div className="navbar">
@@ -8,7 +18,7 @@ const NavBar = () => {
           className="navbar--icon"
           viewBox="0 0 24 24"
           // FIXME: Update fill color based on theme context
-          fill="currentColor"
+          fill={isDark ? `currentColor` : 'none'}
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
@@ -19,7 +29,13 @@ const NavBar = () => {
             stroke-linejoin="round"
           />
         </svg>
-        <span className="theme--text">Dark Mode</span>
+        <span
+          className="theme--text"
+          role="button"
+          onClick={() => setIsDark((prev) => !prev)}
+        >
+          Dark Mode
+        </span>
       </div>
     </nav>
   );

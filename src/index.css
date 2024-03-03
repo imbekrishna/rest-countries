@@ -152,6 +152,7 @@ svg {
 
 .theme--text {
   display: inline-block;
+  cursor: pointer;
 }
 
 /* #endregion */
