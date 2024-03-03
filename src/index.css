@@ -101,6 +101,12 @@ body.dark {
   background-color: var(--clr-elements);
   box-shadow: var(--bs);
 }
+.container--sm {
+  padding: 0.4em 1em;
+  border-radius: 0.4em;
+  background-color: var(--clr-elements);
+  box-shadow: var(--bs);
+}
 
 /* #endregion */
 
@@ -280,3 +286,39 @@ main {
 }
 
 /* #endregion */
+
+.detail--container {
+  padding: 1.5em;
+}
+
+/* #region back button */
+.back--btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  width: fit-content;
+}
+.back--icon {
+  width: 2em;
+}
+/* #endregion */
+
+.detail--flag {
+  margin-block: 3em;
+}
+
+.detail--meta {
+  margin-block: 2em;
+  font-weight: 300;
+}
+
+.detail--meta > p + p {
+  margin-top: 0.5em;
+}
+
+.border--countries {
+  margin-top: 1.5em;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+}
