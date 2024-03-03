@@ -1,10 +1,11 @@
-import { Link, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Country, ICurrencies, Languages } from '../types';
 import { useEffect, useState } from 'react';
 import LodingIndicator from '../components/LodingIndicator';
 
 const CountryDetail = () => {
   const { alpha3Code } = useParams();
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
   const [country, setCountry] = useState<Country | null>(null);
@@ -43,7 +44,7 @@ const CountryDetail = () => {
 
   return (
     <main className="detail--container">
-      <Link to=".." className="container--sm back--btn">
+      <div className="container--sm back--btn" onClick={() => navigate(-1)}>
         <svg
           className="back--icon"
           viewBox="0 0 24 24"
@@ -58,7 +59,7 @@ const CountryDetail = () => {
           />
         </svg>
         <span>Back</span>
-      </Link>
+      </div>
 
       <div className="detail--body">
         <img

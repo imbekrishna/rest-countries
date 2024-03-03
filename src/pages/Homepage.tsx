@@ -1,17 +1,34 @@
 import FilterDropdown from '../components/FilterDropdown';
-import Country from '../components/Country';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Country as CountryType } from '../types';
 import LodingIndicator from '../components/LodingIndicator';
+import { useSearchParams } from 'react-router-dom';
+import useDebounce from '../hooks/UseDebounce';
+import Country from '../components/Country';
 
 const Homepage = () => {
-  const cache = useRef(null);
+  const cache = useRef<CountryType[] | undefined>(undefined);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // FIXME: Filter countries based on query params
 
   const [loading, setLoading] = useState(false);
+  const [countries, setCountries] = useState<CountryType[] | undefined>();
+  const [filteredCountries, setFilteredCountries] = useState<
+    CountryType[] | undefined
+  >([]);
 
-  const [countries, setCountries] = useState<CountryType[] | null>(null);
+  const [search, setSearch] = useState(searchParams.get('search') ?? '');
+
+  const region = searchParams.get('region');
+
+  const byRegion = !region
+    ? countries
+    : countries?.filter((c) => c.region === region);
 
   useEffect(() => {
+    console.log('use effect 1');
+
     setLoading(true);
 
     if (cache.current) {
@@ -31,7 +48,36 @@ const Homepage = () => {
     }
   }, []);
 
-  if (loading || countries === null) {
+  useDebounce(
+    () => {
+      setFilteredCountries(
+        byRegion?.filter((c) =>
+          c.name.common.toLowerCase().includes(search.toLowerCase())
+        )
+      );
+    },
+    [byRegion, search],
+    300
+  );
+
+  function handleFilterChange(key: string, value: string) {
+    setSearchParams((prevParams) => {
+      if (value === null || value === '') {
+        prevParams.delete(key);
+      } else {
+        prevParams.set(key, value);
+      }
+      return prevParams;
+    });
+  }
+
+  const handleSearch = (e: React.ChangeEvent) => {
+    const value = (e.target as HTMLInputElement).value;
+    setSearch(value);
+    handleFilterChange('search', value);
+  };
+
+  if (loading || !countries) {
     return <LodingIndicator />;
   }
 
@@ -56,13 +102,15 @@ const Homepage = () => {
             className="search--input"
             type="search"
             placeholder="Search for a country..."
+            value={search}
+            onChange={handleSearch}
           />
         </div>
         <FilterDropdown />
       </div>
 
       <div className="countries--container">
-        {countries?.map((country) => (
+        {filteredCountries?.map((country) => (
           <Country
             key={country.cca3}
             alpha3Code={country.cca3}
