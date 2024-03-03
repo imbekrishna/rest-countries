@@ -1,16 +1,14 @@
-import themeIcon from './assets/moon-outline.svg';
 import searchIcon from './assets/search.svg';
 import FilterDropdown from './components/FilterDropdown';
+import NavBar from './components/NavBar';
+
+import countries from '../data.json';
+import Country from './components/Country';
 
 const App = () => {
   return (
     <>
-      <nav className="navbar">
-        <h1 className="navbar--title">Where in the world?</h1>
-        <img className="navbar--icon" src={themeIcon} alt="" />
-        <span className="theme--text">Dark Mode</span>
-      </nav>
-
+      <NavBar />
       <main>
         <div className="action--container">
           <div className="container--md search--container">
@@ -23,6 +21,19 @@ const App = () => {
             />
           </div>
           <FilterDropdown />
+        </div>
+
+        <div className="countries--container">
+          {countries.map((country) => (
+            <Country
+              key={country.alpha3Code}
+              name={country.name}
+              capital={country.capital ?? ''}
+              flag={country.flag}
+              population={country.population}
+              region={country.region}
+            />
+          ))}
         </div>
       </main>
     </>
