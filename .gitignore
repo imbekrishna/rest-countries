@@ -24,6 +24,5 @@ dist-ssr
 *.sw?
 
 # fementor files
-data.json
 style-guide.md
 *template.md
