@@ -370,6 +370,11 @@ svg {
   gap: 0.5em;
 }
 
+.border--link {
+  text-decoration: none;
+  color: inherit;
+}
+
 /* #endregion  */
 
 @media screen and (min-width: 768px) {

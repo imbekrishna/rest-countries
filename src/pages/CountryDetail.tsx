@@ -1,7 +1,8 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Country, ICurrencies, Languages } from '../types';
 import { useEffect, useState } from 'react';
 import LodingIndicator from '../components/LodingIndicator';
+import { getBorderCountriesName } from '../utils/helpers';
 
 const CountryDetail = () => {
   const { alpha3Code } = useParams();
@@ -9,6 +10,9 @@ const CountryDetail = () => {
 
   const [loading, setLoading] = useState(false);
   const [country, setCountry] = useState<Country | null>(null);
+  const [borderNames, setBorderNames] = useState<
+    { name: string; cca3: string }[] | undefined
+  >(undefined);
 
   useEffect(() => {
     setLoading(true);
@@ -21,6 +25,16 @@ const CountryDetail = () => {
       .finally(() => setLoading(false));
   }, [alpha3Code]);
 
+  useEffect(() => {
+    const fetchBorderNames = async () => {
+      const names = await getBorderCountriesName(country?.borders);
+
+      setBorderNames(names);
+    };
+
+    fetchBorderNames();
+  }, [country]);
+
   const currencyMapper = (currencies: ICurrencies): string => {
     const nameArr = Object.values(currencies);
 
@@ -32,11 +46,20 @@ const CountryDetail = () => {
     return langArr.join(', ');
   };
 
-  const borderCountries = country?.borders?.map((c) => (
-    <span key={c} className="container--sm">
-      {c}
-    </span>
-  ));
+  const numberFormatter = new Intl.NumberFormat('en-US');
+
+  const borderCountries =
+    borderNames?.length === 0
+      ? 'No Border Countries'
+      : borderNames?.map((c) => (
+          <Link
+            to={`/${c.cca3}`}
+            key={c.cca3}
+            className="container--sm border--link"
+          >
+            {c.name}
+          </Link>
+        ));
 
   if (loading || country == null) {
     return <LodingIndicator />;
@@ -77,7 +100,7 @@ const CountryDetail = () => {
               </p>
               <p>
                 <span className="detail--key">Population:</span>{' '}
-                {country.population}
+                {numberFormatter.format(country.population)}
               </p>
               <p>
                 <span className="detail--key">Region:</span> {country.region}
