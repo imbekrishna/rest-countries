@@ -1,5 +1,3 @@
-import backIcon from '../assets/arrow-left.svg';
-
 const country = {
   name: 'India',
   topLevelDomain: ['.in'],
@@ -101,7 +99,21 @@ const CountryDetail = () => {
   return (
     <main className="detail--container">
       <div className="container--sm back--btn">
-        <img className="back--icon" src={backIcon} alt="" />
+        {/* <img className="back--icon" src={backIcon} alt="" /> */}
+        {/* <BackIcon /> */}
+        <svg
+          className="back--icon"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M18 12L6 12M6 12L11 17M6 12L11 7"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
         <span>Back</span>
       </div>
 

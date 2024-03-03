@@ -119,16 +119,24 @@ body {
   background-color: var(--clr-bg);
 }
 
+svg {
+  color: var(--clr-text);
+}
+
 /* #region navbar */
 
-.navbar {
-  padding: 2em 1em;
-
-  display: flex;
-  align-items: center;
-
+.navbar--wrapper {
   background-color: var(--clr-elements);
   box-shadow: var(--bs);
+  padding: 2em 1em;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 1920px;
+  margin-inline: auto;
 }
 
 .navbar--title {
@@ -150,8 +158,10 @@ body {
 
 /* #region main */
 
-main {
+.home--container {
   padding: 2em 1em;
+  margin-inline: auto;
+  max-width: 1920px;
 }
 
 /* #endregion */
@@ -163,6 +173,8 @@ main {
 }
 
 /* #region search bar */
+
+/* FIXME: width container */
 
 .search--container {
   width: 100%;
@@ -177,11 +189,14 @@ main {
 .search--input {
   width: 100%;
 
+  color: var(--clr-text);
   font-size: var(--fs-body);
   letter-spacing: 0.5px;
 
   border: none;
   outline: none;
+
+  background-color: var(--clr-elements);
 }
 
 .search--input:focus,
@@ -238,6 +253,7 @@ main {
 .region--options.open {
   padding: 1em 1.5em;
   height: fit-content;
+  background-color: inherit;
 }
 
 /* TODO: Add hover states */
@@ -250,11 +266,10 @@ main {
 
 .countries--container {
   margin-top: 3em;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-
-  gap: 3rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  place-items: center;
+  row-gap: 3em;
 }
 
 /* #region country */
@@ -263,6 +278,7 @@ main {
   border-radius: 0.4em;
   box-shadow: var(--bs);
   width: 80vw;
+
   height: 380px;
 }
 
@@ -305,6 +321,8 @@ main {
 }
 /* #endregion */
 
+/* #region Detail Body */
+
 .detail--body {
   width: 100%;
   margin-top: 3em;
@@ -313,6 +331,11 @@ main {
 .detail--body--top {
   margin-top: 3rem;
 }
+
+.detail--body--top h2 {
+  font-size: 2.2rem;
+}
+
 .detail--meta {
   margin-block: 2em;
   font-weight: 300;
@@ -334,7 +357,29 @@ main {
   gap: 0.5em;
 }
 
+/* #endregion  */
+
 @media screen and (min-width: 768px) {
+  .action--container {
+    margin-inline: 1.5em;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .search--container {
+    width: auto;
+    flex: 1;
+    max-width: 40vw;
+  }
+
+  .country {
+    max-width: 300px;
+  }
+
+  .navbar {
+    padding-inline: 2em;
+  }
+
   .detail--container {
     padding: 4em;
   }
@@ -396,5 +441,11 @@ main {
 
   .detail--meta--bottom h3 {
     min-width: fit-content;
+  }
+}
+
+@media screen and (min-width: 1450px) {
+  .countries--container {
+    column-gap: 2em;
   }
 }
