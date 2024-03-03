@@ -105,46 +105,53 @@ const CountryDetail = () => {
         <span>Back</span>
       </div>
 
-      <img className="detail--flag" src={country.flag} alt={country.name} />
-
-      <h2>{country.name}</h2>
-
-      <div className="detail--meta">
-        <p>
-          <span className="detail--key">Native name:</span> {country.nativeName}
-        </p>
-        <p>
-          <span className="detail--key">Population:</span> {country.population}
-        </p>
-        <p>
-          <span className="detail--key">Region:</span> {country.region}
-        </p>
-        <p>
-          <span className="detail--key">Sub Region:</span> {country.subregion}
-        </p>
-        <p>
-          <span className="detail--key">Capital:</span> {country.capital}
-        </p>
+      <div className="detail--body">
+        <img className="detail--flag" src={country.flag} alt={country.name} />
+        <div className="detail--body--top">
+          <h2>{country.name}</h2>
+          <div className="detail--meta--top">
+            <div className="detail--meta">
+              <p>
+                <span className="detail--key">Native name:</span>{' '}
+                {country.nativeName}
+              </p>
+              <p>
+                <span className="detail--key">Population:</span>{' '}
+                {country.population}
+              </p>
+              <p>
+                <span className="detail--key">Region:</span> {country.region}
+              </p>
+              <p>
+                <span className="detail--key">Sub Region:</span>{' '}
+                {country.subregion}
+              </p>
+              <p>
+                <span className="detail--key">Capital:</span> {country.capital}
+              </p>
+            </div>
+            <div className="detail--meta">
+              <p>
+                <span className="detail--key">Top Level Domain:</span>{' '}
+                {country.topLevelDomain}
+              </p>
+              <p>
+                <span className="detail--key">Currencies:</span>{' '}
+                {currencyMapper(country.currencies)}
+              </p>
+              <p>
+                <span className="detail--key">Languages:</span>{' '}
+                {languageMapper(country.languages)}
+              </p>
+            </div>
+          </div>
+          <div className="detail--meta--bottom">
+            <h3>Border Countries:</h3>
+            {/* TODO: Get Bordering countries name */}
+            <div className="border--countries">{borderCountries}</div>
+          </div>
+        </div>
       </div>
-
-      <div className="detail--meta">
-        <p>
-          <span className="detail--key">Top Level Domain:</span>{' '}
-          {country.topLevelDomain}
-        </p>
-        <p>
-          <span className="detail--key">Currencies:</span>{' '}
-          {currencyMapper(country.currencies)}
-        </p>
-        <p>
-          <span className="detail--key">Languages:</span>{' '}
-          {languageMapper(country.languages)}
-        </p>
-      </div>
-
-      <h3>Border Countries:</h3>
-      {/* TODO: Get Bordering countries name */}
-      <div className="border--countries">{borderCountries}</div>
     </main>
   );
 };
