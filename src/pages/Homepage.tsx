@@ -1,23 +1,34 @@
 import FilterDropdown from '../components/FilterDropdown';
 import Country from '../components/Country';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Country as CountryType } from '../types';
 import LodingIndicator from '../components/LodingIndicator';
 
 const Homepage = () => {
+  const cache = useRef(null);
+
   const [loading, setLoading] = useState(false);
 
   const [countries, setCountries] = useState<CountryType[] | null>(null);
 
   useEffect(() => {
     setLoading(true);
-    fetch(`https://restcountries.com/v3.1/all`)
-      .then((res) => res.json())
-      .then((data) => {
-        setCountries(data);
-      })
-      .catch((err) => console.error(err))
-      .finally(() => setLoading(false));
+
+    if (cache.current) {
+      setCountries(cache.current);
+      setLoading(false);
+    } else {
+      fetch(
+        `https://restcountries.com/v3.1/all?fields=name,population,flags,region,cca3,capital`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          cache.current = data;
+          setCountries(data);
+        })
+        .catch((err) => console.error(err))
+        .finally(() => setLoading(false));
+    }
   }, []);
 
   if (loading || countries === null) {

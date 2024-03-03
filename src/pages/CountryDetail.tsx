@@ -11,9 +11,11 @@ const CountryDetail = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`https://restcountries.com/v3.1/alpha/${alpha3Code}`)
+    fetch(
+      `https://restcountries.com/v3.1/alpha/${alpha3Code}?fields=name,population,flags,region,subregion,cca3,capital,tld,currencies,languages,tld,borders`
+    )
       .then((res) => res.json())
-      .then((data) => setCountry(data[0]))
+      .then((data) => setCountry(data))
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
   }, [alpha3Code]);
