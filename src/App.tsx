@@ -1,35 +1,31 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import themeIcon from './assets/moon-outline.svg';
+import searchIcon from './assets/search.svg';
+import FilterDropdown from './components/FilterDropdown';
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const App = () => {
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+      <nav className="navbar">
+        <h1 className="navbar--title">Where in the world?</h1>
+        <img className="navbar--icon" src={themeIcon} alt="" />
+        <span className="theme--text">Dark Mode</span>
+      </nav>
 
-export default App
+      <main>
+        <div className="action--container">
+          <div className="container--md search--container">
+            {/* FIXME: update color */}
+            <img className="search--icon" src={searchIcon} alt="" />
+            <input
+              className="search--input"
+              type="search"
+              placeholder="Search for a country..."
+            />
+          </div>
+          <FilterDropdown />
+        </div>
+      </main>
+    </>
+  );
+};
+export default App;
