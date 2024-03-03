@@ -1,17 +1,29 @@
+import { Link } from 'react-router-dom';
+
 type CountryProps = {
   name: string;
   region: string;
   capital: string;
   population: number;
   flag: string;
+  alt: string;
+  alpha3Code: string;
 };
 
-const Country = ({ name, region, capital, population, flag }: CountryProps) => {
+const Country = ({
+  name,
+  region,
+  capital,
+  population,
+  flag,
+  alt,
+  alpha3Code,
+}: CountryProps) => {
   const popStr = new Intl.NumberFormat('en-US').format(population);
 
   return (
-    <div className="country">
-      <img className="country--flag" src={flag} alt={name} />
+    <Link to={`/${alpha3Code}`} className="country">
+      <img className="country--flag" src={flag} alt={alt} />
       <div className="country--detail">
         <h2>{name}</h2>
         <p>
@@ -24,7 +36,7 @@ const Country = ({ name, region, capital, population, flag }: CountryProps) => {
           <span className="detail--key">Capital:</span> {capital}
         </p>
       </div>
-    </div>
+    </Link>
   );
 };
 export default Country;

@@ -1,106 +1,47 @@
-const country = {
-  name: 'India',
-  topLevelDomain: ['.in'],
-  alpha2Code: 'IN',
-  alpha3Code: 'IND',
-  callingCodes: ['91'],
-  capital: 'New Delhi',
-  altSpellings: ['IN', 'Bhārat', 'Republic of India', 'Bharat Ganrajya'],
-  subregion: 'Southern Asia',
-  region: 'Asia',
-  population: 1380004385,
-  latlng: [20, 77],
-  demonym: 'Indian',
-  area: 3287590,
-  gini: 35.7,
-  timezones: ['UTC+05:30'],
-  borders: ['AFG', 'BGD', 'BTN', 'MMR', 'CHN', 'NPL', 'PAK', 'LKA'],
-  nativeName: 'भारत',
-  numericCode: '356',
-  flags: {
-    svg: 'https://flagcdn.com/in.svg',
-    png: 'https://flagcdn.com/w320/in.png',
-  },
-  currencies: [
-    {
-      code: 'INR',
-      name: 'Indian rupee',
-      symbol: '₹',
-    },
-  ],
-  languages: [
-    {
-      iso639_1: 'hi',
-      iso639_2: 'hin',
-      name: 'Hindi',
-      nativeName: 'हिन्दी',
-    },
-    {
-      iso639_1: 'en',
-      iso639_2: 'eng',
-      name: 'English',
-      nativeName: 'English',
-    },
-  ],
-  translations: {
-    br: 'India',
-    pt: 'Índia',
-    nl: 'India',
-    hr: 'Indija',
-    fa: 'هند',
-    de: 'Indien',
-    es: 'India',
-    fr: 'Inde',
-    ja: 'インド',
-    it: 'India',
-    hu: 'India',
-  },
-  flag: 'https://flagcdn.com/in.svg',
-  regionalBlocs: [
-    {
-      acronym: 'SAARC',
-      name: 'South Asian Association for Regional Cooperation',
-    },
-  ],
-  cioc: 'IND',
-  independent: true,
-};
+import { Link, useParams } from 'react-router-dom';
+import { Country, ICurrencies, Languages } from '../types';
+import { useEffect, useState } from 'react';
+import LodingIndicator from '../components/LodingIndicator';
 
 const CountryDetail = () => {
-  const currencyMapper = (
-    currencies: {
-      code: string;
-      name: string;
-      symbol: string;
-    }[]
-  ) => {
-    const nameArr = currencies.map((currency) => currency.name);
-    return nameArr.join(', ');
+  const { alpha3Code } = useParams();
+
+  const [loading, setLoading] = useState(false);
+  const [country, setCountry] = useState<Country | null>(null);
+
+  useEffect(() => {
+    setLoading(true);
+    fetch(`https://restcountries.com/v3.1/alpha/${alpha3Code}`)
+      .then((res) => res.json())
+      .then((data) => setCountry(data[0]))
+      .catch((err) => console.error(err))
+      .finally(() => setLoading(false));
+  }, [alpha3Code]);
+
+  const currencyMapper = (currencies: ICurrencies): string => {
+    const nameArr = Object.values(currencies);
+
+    return nameArr.map((curr) => curr.name).join(', ');
   };
 
-  const languageMapper = (
-    languages: {
-      iso639_1: string;
-      iso639_2: string;
-      name: string;
-      nativeName: string;
-    }[]
-  ) => {
-    const langArr = languages.map((language) => language.name);
+  const languageMapper = (languages: Languages): string => {
+    const langArr = Object.values(languages);
     return langArr.join(', ');
   };
 
-  const borderCountries = country.borders.map((c) => (
+  const borderCountries = country?.borders?.map((c) => (
     <span key={c} className="container--sm">
       {c}
     </span>
   ));
 
+  if (loading || country == null) {
+    return <LodingIndicator />;
+  }
+
   return (
     <main className="detail--container">
-      <div className="container--sm back--btn">
-        {/* <img className="back--icon" src={backIcon} alt="" /> */}
-        {/* <BackIcon /> */}
+      <Link to=".." className="container--sm back--btn">
         <svg
           className="back--icon"
           viewBox="0 0 24 24"
@@ -110,22 +51,26 @@ const CountryDetail = () => {
           <path
             d="M18 12L6 12M6 12L11 17M6 12L11 7"
             stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
         </svg>
         <span>Back</span>
-      </div>
+      </Link>
 
       <div className="detail--body">
-        <img className="detail--flag" src={country.flag} alt={country.name} />
+        <img
+          className="detail--flag"
+          src={country.flags.svg}
+          alt={country.flags.alt}
+        />
         <div className="detail--body--top">
-          <h2>{country.name}</h2>
+          <h2>{country.name.common}</h2>
           <div className="detail--meta--top">
             <div className="detail--meta">
               <p>
                 <span className="detail--key">Native name:</span>{' '}
-                {country.nativeName}
+                {country.name.common}
               </p>
               <p>
                 <span className="detail--key">Population:</span>{' '}
@@ -139,13 +84,14 @@ const CountryDetail = () => {
                 {country.subregion}
               </p>
               <p>
-                <span className="detail--key">Capital:</span> {country.capital}
+                <span className="detail--key">Capital:</span>{' '}
+                {country?.capital.join(', ')}
               </p>
             </div>
             <div className="detail--meta">
               <p>
                 <span className="detail--key">Top Level Domain:</span>{' '}
-                {country.topLevelDomain}
+                {country.tld.join(', ')}
               </p>
               <p>
                 <span className="detail--key">Currencies:</span>{' '}
