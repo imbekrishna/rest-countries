@@ -14,7 +14,7 @@ const NavBar = () => {
     <nav className="navbar--wrapper">
       <div className="navbar">
         <Link to="/" className="navbar--title">
-          <h1>Where in the world?</h1>
+          Where in the world?
         </Link>
         <svg
           className="navbar--icon"
