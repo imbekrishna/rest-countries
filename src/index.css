@@ -135,6 +135,24 @@ a {
   color: inherit;
 }
 
+.loading--shimmer {
+  background: linear-gradient(
+    -45deg,
+    #eeeeee10 40%,
+    #fafafa3a 50%,
+    #eeeeee10 60%
+  );
+  background-size: 300%;
+  background-position-x: 100%;
+  animation: shimmer 1s infinite linear;
+}
+
+@keyframes shimmer {
+  to {
+    background-position-x: 0%;
+  }
+}
+
 /* #region navbar */
 
 .navbar--wrapper {
