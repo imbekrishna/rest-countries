@@ -130,6 +130,11 @@ svg {
   color: var(--clr-text);
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 /* #region navbar */
 
 .navbar--wrapper {
@@ -181,8 +186,6 @@ svg {
 }
 
 /* #region search bar */
-
-/* FIXME: width container */
 
 .search--container {
   width: 100%;
@@ -287,9 +290,6 @@ svg {
   box-shadow: var(--bs);
   width: 80vw;
 
-  text-decoration: none;
-  color: inherit;
-
   height: 380px;
 }
 
@@ -370,11 +370,6 @@ svg {
   gap: 0.5em;
 }
 
-.border--link {
-  text-decoration: none;
-  color: inherit;
-}
-
 /* #endregion  */
 
 @media screen and (min-width: 768px) {
@@ -420,7 +415,6 @@ svg {
 
   .detail--flag {
     max-width: 40vw;
-    aspect-ratio: 4/3;
   }
 
   .detail--body--top {

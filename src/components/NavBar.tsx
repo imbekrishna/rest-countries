@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const NavBar = () => {
   const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -12,12 +13,12 @@ const NavBar = () => {
   return (
     <nav className="navbar--wrapper">
       <div className="navbar">
-        <h1 className="navbar--title">Where in the world?</h1>
-        {/* <img className="navbar--icon" src={themeIcon} alt="" /> */}
+        <Link to="/" className="navbar--title">
+          <h1>Where in the world?</h1>
+        </Link>
         <svg
           className="navbar--icon"
           viewBox="0 0 24 24"
-          // FIXME: Update fill color based on theme context
           fill={isDark ? `currentColor` : 'none'}
           xmlns="http://www.w3.org/2000/svg"
         >

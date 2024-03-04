@@ -52,11 +52,7 @@ const CountryDetail = () => {
     borderNames?.length === 0
       ? 'No Border Countries'
       : borderNames?.map((c) => (
-          <Link
-            to={`/${c.cca3}`}
-            key={c.cca3}
-            className="container--sm border--link"
-          >
+          <Link to={`/${c.cca3}`} key={c.cca3} className="container--sm">
             {c.name}
           </Link>
         ));
@@ -131,7 +127,6 @@ const CountryDetail = () => {
           </div>
           <div className="detail--meta--bottom">
             <h3>Border Countries:</h3>
-            {/* TODO: Get Bordering countries name */}
             <div className="border--countries">{borderCountries}</div>
           </div>
         </div>

@@ -7,8 +7,22 @@ const FilterDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const closeOptions = () => setIsOpen((prev) => !prev);
-  const handleClick = (e: React.MouseEvent) =>
-    setSearchParams({ region: (e.target as HTMLElement).id });
+
+  const handleFilterChange = (key: string, value: string) => {
+    setSearchParams((prevParams) => {
+      if (value === null || value === '') {
+        prevParams.delete(key);
+      } else {
+        prevParams.set(key, value);
+      }
+      return prevParams;
+    });
+  };
+
+  const handleClick = (e: React.MouseEvent) => {
+    const value = (e.target as HTMLElement).id;
+    handleFilterChange('region', value);
+  };
 
   return (
     <div className="container--md filter--container" onClick={closeOptions}>
@@ -36,7 +50,7 @@ const FilterDropdown = () => {
         className={`container--md region--options ${isOpen ? 'open' : ''}`}
         onClick={handleClick}
       >
-        {/* TODO: Add all filter */}
+        <p id="">All</p>
         <p id="Africa">Africa</p>
         <p id="Americas">Americas</p>
         <p id="Asia">Asia</p>
