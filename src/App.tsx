@@ -1,6 +1,6 @@
-import Layout from './pages/Layout';
-import Homepage from './pages/Homepage';
-import CountryDetail from './pages/CountryDetail';
+import Layout from '@pages/Layout';
+import Homepage from '@pages/Homepage';
+import CountryDetail from '@pages/CountryDetail';
 
 import {
   createBrowserRouter,

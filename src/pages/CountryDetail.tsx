@@ -1,7 +1,7 @@
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Country, ICurrencies, Languages } from '../types';
 import { useEffect, useState } from 'react';
-import LodingIndicator from '../components/LodingIndicator';
+import LodingIndicator from '@components/LodingIndicator';
 import { getBorderCountriesName } from '../utils/helpers';
 
 const CountryDetail = () => {

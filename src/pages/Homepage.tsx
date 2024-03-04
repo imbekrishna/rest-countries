@@ -1,13 +1,13 @@
-import FilterDropdown from '../components/FilterDropdown';
+import FilterDropdown from '@components/FilterDropdown';
 import { useEffect, useRef, useState, lazy, Suspense } from 'react';
 import { Country as CountryType } from '../types';
-import LodingIndicator from '../components/LodingIndicator';
+import LodingIndicator from '@components/LodingIndicator';
 import { useSearchParams } from 'react-router-dom';
-import useDebounce from '../hooks/UseDebounce';
-import Searchbar from '../components/Searchbar';
-import LoadingCountry from '../components/LoadingCountry';
+import useDebounce from '@hooks/UseDebounce';
+import Searchbar from '@components/Searchbar';
+import LoadingCountry from '@components/LoadingCountry';
 
-const Country = lazy(() => import('../components/Country'));
+const Country = lazy(() => import('@components/Country'));
 
 const Homepage = () => {
   const cache = useRef<CountryType[] | undefined>(undefined);
